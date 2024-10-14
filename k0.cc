@@ -204,13 +204,15 @@ int main() {
   BasicBlock &entry = F.basic_blocks_[0];
   Function Callee;
   BasicBlock &callee_entry = Callee.basic_blocks_[0];
-  entry.body_.emplace_back(Instruction{IMM, {1, 4096}});
-  entry.body_.emplace_back(Instruction{DEBUG, {1, 4096}});
+  callee_entry.body_.emplace_back(Instruction{IMM, {1, 4096}});
+  callee_entry.body_.emplace_back(Instruction{DEBUG, {1, 4096}});
   callee_entry.body_.emplace_back(Instruction{RET});
   entry.body_.emplace_back(Instruction{IMM, {1, 1024}});
   entry.body_.emplace_back(
       Instruction{CALL, {*(reinterpret_cast<int64_t *>(&Callee))}});
+  entry.body_.emplace_back(Instruction{DEBUG, {1}});
   entry.body_.emplace_back(Instruction{IMM, {2, -1024}});
+  entry.body_.emplace_back(Instruction{ADD, {3, 1, 2}});
   entry.body_.emplace_back(Instruction{DEBUG, {3}});
   entry.body_.emplace_back(Instruction{RET});
   ExecutionEngine EE;
