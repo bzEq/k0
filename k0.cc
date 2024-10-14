@@ -102,8 +102,6 @@ public:
   }
 
 private:
-  bool stopping_;
-  PC pc_;
   std::vector<FunctionContext> stack_;
 
   void Execute() {
